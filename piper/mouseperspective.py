@@ -8,6 +8,7 @@ from .profilerow import ProfileRow
 from .ratbagd import RatbagdDevice, RatbagdProfile
 from .resolutionspage import ResolutionsPage
 from .advancedpage import AdvancedPage
+from .battery import BatteryIndicator
 from .ledspage import LedsPage
 from .util.gobject import connect_signal_with_weak_ref
 
@@ -38,6 +39,8 @@ class MousePerspective(Gtk.Overlay):
         self._device: Optional[RatbagdDevice] = None
         self._profile: Optional[RatbagdProfile] = None
         self._notification_error_timeout_id = 0
+        self._battery_indicator = BatteryIndicator()
+        self._titlebar.pack_end(self._battery_indicator)
 
     @GObject.Property
     def name(self) -> str:
@@ -70,6 +73,7 @@ class MousePerspective(Gtk.Overlay):
 
     def set_device(self, device: RatbagdDevice) -> None:
         self._device = device
+        self._battery_indicator.set_device(device.name, device.model)
         connect_signal_with_weak_ref(
             self, device, "resync", lambda _: self._show_notification_error()
         )

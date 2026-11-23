@@ -4,6 +4,7 @@ data/org.freedesktop.Piper.appdata.xml.in.in
 piper/__init__.py
 piper/advancedpage.py
 piper/application.py
+piper/battery.py
 piper/buttondialog.py
 piper/buttonspage.py
 piper/devicerow.py
